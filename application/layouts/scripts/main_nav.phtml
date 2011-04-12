@@ -1,0 +1,7 @@
+<? if(is_array($this->tree)) foreach($this->tree as $nodeId => $node): ?>
+	<? if($node['node']->getNodeType() == Application_Model_Node::NODE_TYPE_HTML): ?>
+		<a href="<?=Zend_Controller_Front::getInstance()->getBaseUrl()?>/content/content/title/<?=urlencode($node['node']->getNodeName())?>"><?=$node["node"]->getNodeName()?></a> |
+	<? elseif($node['node']->getNodeType() ==  Application_Model_Node::NODE_TYPE_LINK): ?>
+		<a href="<?=Zend_Controller_Front::getInstance()->getBaseUrl()?><?=$node["node"]->getNodeValue()?>"><?=$node["node"]->getNodeName()?></a> |
+	<? endif; ?>
+<? endforeach;?>

@@ -1,0 +1,37 @@
+<?php echo $this->doctype() ?>
+<html>
+  <head>
+    <title>NGN</title>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/css/style.css" type="text/css">
+  	<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/css/nestedsortablewidget.css" type="text/css">
+  	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/jquery.fancybox-1.3.4.css" media="screen" />
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery-1.5.1.min.js"></script>
+  	
+  	<?php if(isset($this->treeJS)): ?>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery.jstree.js"></script>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jstreegrid.js"></script>
+  	<!-- 
+    <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery-1.1.4.js"></script>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/interface-1.2.js"></script>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/inestedsortable.js"></script>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/json.js"></script>
+  	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery.nestedsortablewidget.js"></script>
+  	-->
+  	<?php endif; ?>
+  	<!--  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery.fancybox-1.3.4.pack.js"></script>-->
+  
+  </head>
+  <body>
+    <div id="container">
+      <div id="menu">
+      	<?= $this->navigation() ?>
+      </div>
+      	<?php if(isset($this->nodeNav)): ?><h3><?= $this->navigation($this->nodeNav->getId()) ?></h3><? endif; ?>
+      	<?php if(isset($this->nodeNavId)): ?><h3><?= $this->navigation($this->nodeNavId) ?></h3><? endif; ?>
+		<br />
+      	<?php echo $this->layout()->content ?>
+ 
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,76 @@
+<script type="text/javascript">
+/* <![CDATA[ */
+	jQuery( function($) { 
+	
+/*
+ * Even with no configuration you get sensible defaults.
+ */
+
+//$('#ajax-response1').NestedSortableWidget({
+//	loadUrl: "<?php echo $this->baseUrl(); ?>/admin/treeJson/",
+//	saveUrl: "<?php echo $this->baseUrl(); ?>/admin/treeJsonSave/"
+//});
+			var baseurl = "<?php echo $this->baseUrl(); ?>";
+			var json = jQuery.getJSON( "<?php echo $this->baseUrl(); ?>/admin/treeJson/",  function(data) {
+			$("#ajax-response1").jstree({ 
+				"json_data" : {
+					"data" : data,
+					"progressive_render" : true
+				},
+				"grid": {
+					columns: [
+					{width: 200, header: "Nodes"},
+					{cellClass: "col1", value: "type", width: 200, header: "Type"},
+					{cellClass: "control_repl", value: "control", width: 200, header: "Control"},
+					]
+					},
+				"themes" : {
+					"theme" : "apple",
+					"dots" : false,
+					"icons" : false
+				},
+				"plugins" : [ "themes", "json_data", "dnd", "grid" ]
+			});
+
+			// init control links
+			$(".control_repl").each(function() {
+				var id = $(this).html();
+				var control = '<a href="'+baseurl+'/admin/treenode/node/'+id+'">edit</a>';
+				control += " | ";
+				control += '<a href="'+baseurl+'/admin/treenode/node/'+id+'/delete/1">delete</a>';
+				$(this).html(control);
+			});
+
+			$("#ajax-response1").append("<a onClick=\"save()\" href=\"#\">save</a>");
+
+			//alert($.param($("#ajax-response1").jstree("get_json", -1, [ "id" , "class" ], [])));
+			
+		});
+
+
+	});
+
+function save() 
+{
+	json = jQuery.jstree._reference($("#ajax-response1")).get_json(-1);
+
+	for( var k=0; k < json.length; k++ ) {
+		json[k].position = k;
+		$.ajax({
+			 type:"POST",
+			 url:"<?php echo $this->baseUrl(); ?>/admin/treeJsonSave/",
+			 data:json[k],
+			 dataType:"text",
+			 success:function(data){
+				if(data != "OK")
+			    	alert("Beim Speichern ist ein Fehler aufgetreten");
+			  }});
+	  }
+}
+/* ]]> */
+</script>
+
+<h2>
+Tree:
+</h2>
+<div id="ajax-response1"></div>
